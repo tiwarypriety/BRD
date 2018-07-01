@@ -10,11 +10,9 @@ import java.util.ArrayList;
 import pojo.Customer;
 
 public class FileLevel {
-	ArrayList list = new ArrayList();
 	Validation v = new Validation();
 	Customer cus = new Customer();
 	CustomerDAO dao = new CustomerDAO();
-	Connection con;
 	String c;
 	
 FileLevel(BufferedReader br) throws NumberFormatException, IOException
@@ -39,7 +37,7 @@ String s[] = c.split("~",-1);
 		cus.setModifiedBy(s[13]);
 		cus.setAuthorizedDate(s[14]);
 		cus.setAuthorizedBy(s[15]);		
-		list.add(s);
+		
 try{
 	int number;
 	FileWriter out = new FileWriter("d:/Fileleveltestcase.txt",true);
@@ -49,12 +47,13 @@ if(v.checkNull(s)&&v.checkName(cus.getName())&&v.checkPinCode(cus.getPin_code())
 	
 	 number= dao.insertRecord(cus);
 	 System.out.println("record inserted "+number);
-	//con.rollback();
+
 		}
 		
 	else
 	{
-		break;		
+			dao.rollback();
+			break;
 	}
 
 	}					
