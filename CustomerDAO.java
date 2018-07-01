@@ -11,15 +11,16 @@ import java.util.ArrayList;
 import connection.ConnectionI;
 import pojo.Customer;
 import connection.OracleConnection;
-public class CustomerDAO implements CustomerDAOI{
+public class CustomerDAO implements CustomerDAOI
+{
 	Connection con;
 	ConnectionI ci ;
 	ResultSet rs ;
 	PreparedStatement pst ;
 	
-	public int insertRecord(Customer c) {
+	public int insertRecord(Customer c)
+	{
 		int g = 0;
-		ArrayList<Customer> customer = new ArrayList<Customer>();
 		try
 		{
 			ci = new OracleConnection();
@@ -44,27 +45,25 @@ public class CustomerDAO implements CustomerDAOI{
         pst.setString(13,c.getModifiedDate());
         pst.setString(14,c.getModifiedBy());
         pst.setString(15,c.getAuthorizedDate());
-        pst.setString(16,c.getAuthorizedBy());
-                
-        g = pst.executeUpdate();
+        pst.setString(16,c.getAuthorizedBy());               
+        g = pst.executeUpdate();		
 		}
 		catch(SQLException ex)
 		{
+
 			System.out.println(ex);
+	
 		}
-		finally
-		{
-			
-			try 
-			{
-				con.commit();
-				con.close();
-				
-			} catch (SQLException ex) 
-			{
-				ex.printStackTrace();
-			}
-		}
+		
 		return g;		
 	}
+	
+	public void roll() throws SQLException
+	{
+		System.out.println("rr");
+		con.rollback();
+		System.out.println("rollbacked");
+		
+	}
 }
+

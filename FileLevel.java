@@ -15,8 +15,9 @@ public class FileLevel {
 	CustomerDAO dao = new CustomerDAO();
 	String c;
 	
-FileLevel(BufferedReader br) throws NumberFormatException, IOException
+FileLevel(BufferedReader br) throws NumberFormatException, IOException, SQLException
 {
+	FileWriter out = new FileWriter("d:/newErrorLog2.txt");
 	while((c = br.readLine())!=null)					
 	{
 		
@@ -40,21 +41,7 @@ String s[] = c.split("~",-1);
 		
 try{
 	int number;
-	FileWriter out = new FileWriter("d:/Fileleveltestcase.txt",true);
 	
-if(v.checkNull(s)&&v.checkName(cus.getName())&&v.checkPinCode(cus.getPin_code())&&v.checkEmailFormat(cus.getEmail())&&v.checkRecordStatus(cus.getRecordStatus())&&v.checkFlag(cus.getFlag())&&v.checkContact(cus.getContact_number())&&v.code(cus.getCode()))	
-	{
-	
-	 number= dao.insertRecord(cus);
-	 System.out.println("record inserted "+number);
-
-		}
-		
-	else
-	{
-			dao.rollback();
-			break;
-	}
 
 	}					
 
@@ -63,5 +50,6 @@ if(v.checkNull(s)&&v.checkName(cus.getName())&&v.checkPinCode(cus.getPin_code())
 				System.out.println(e);
 			}	
 }	
+	dao.roll();
 	}
 }
